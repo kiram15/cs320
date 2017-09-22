@@ -2,7 +2,6 @@ import json
 import sys
 import time
 
-
 def read_json(filename):
     with open(sys.argv[1]) as json_file:
         return json.load(json_file)
@@ -41,16 +40,20 @@ def galeShapely(dict1, dict2):
     matches = {y: x for x, y in matches.items()}
     return matches
 
-
 if __name__ == "__main__":
     # read in input file
     inputFile = read_json(sys.argv[1])
+    matchesList = []
 
+    
     start_time = time.process_time()
+    #go through all of the groups w/ GS
     for i in range(0, len(inputFile)):
         dict1 = inputFile[i][0]
         dict2 = inputFile[i][1]
         matches = galeShapely(dict1, dict2)
         print (matches)
-    
-    # write output file
+        matchesList.append(matches)
+
+    #write output file   
+    write_json(matchesList, sys.argv[2]);
