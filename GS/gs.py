@@ -7,6 +7,9 @@ def read_json(filename):
 
 if __name__ == "__main__":
     # read in input file 
+    inputFile = read_json(sys.argv[1])
+    dict1 = inputFile[0]
+    dict2 = inputFile[1]
     
     # run Gale-Shapley calculations
     
