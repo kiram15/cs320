@@ -33,11 +33,12 @@ def galeShapely(dict1, dict2):
             else:  # if she's taken
                 currMan = matches.get(woman)
                 wPrefList = dict2[woman]
-                if (wPrefList.index(man) > wPrefList.index(currMan)):  #if she likes the new man better
+                if (wPrefList.index(man) < wPrefList.index(currMan)):  #if she likes the new man better
                     freeMen.remove(man)
                     matches[woman] = man
                     freeMen.append(currMan)
                     break
+    matches = {y: x for x, y in matches.items()}
     return matches
 
 
