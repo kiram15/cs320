@@ -1,0 +1,28 @@
+small_prob time
+2 group - 2 people and 3 people
+3.199999999999037e-05 seconds
+
+big_prob time
+2 groups - 40 people and 200 people
+0.011960000000000012 seconds
+
+medium_prob
+10 groups - size 1000
+2.487898 seconds
+
+
+bigger_prob time
+50 groups - sizes 10 through 990
+4.669403999999999 seconds
+
+huge_prob time
+5 groups - size 2500
+9.893598999999998 seconds
+
+In the worst case big O, Gale Shapely can be up to n^2 complexity. The algorithm itself,
+if implemented properly, should never reach this bound, as women and men are constantly
+being taking out of the equation and don't have to be considered. In my own code, I cut
+down on time by utilizing dictionary data structures instead of lists, as dictionary
+lookups are constant time (O(1)), while lookups in lists are O(n). In the lists I used,
+I only search through the freeWoman list once, to see if she's available, but I chose to
+use a dictionary of coupled matches because it heavily cut down the overall time spent.
