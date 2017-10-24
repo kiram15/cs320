@@ -34,7 +34,8 @@ def read_graph(filename):
 def compute_in_degrees(digraph):
     """ Gets a directed graph as input and returns a dictionary
     in which each key is a node and the value for that is the number
-    of incoming edges. """
+    of incoming edges. 
+    :rtype: object"""
     in_degree = {node: 0 for node in digraph.keys()}
     for node, neighbors in digraph.items():
         for n in neighbors:
