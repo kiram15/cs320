@@ -52,7 +52,7 @@ def compute_tps(filename):
 
     startList = list(startGraph.keys())
     #print("startList: ", startList)
-    finalList = []
+    tps = []
     while len(startList) != 0: #while the list is not empty
         for node in startList:
             if inDegrees[node] == 0:
@@ -60,23 +60,23 @@ def compute_tps(filename):
                 for dependentNode in startGraph[node]:
                     inDegrees[dependentNode] -= 1
                     print("dependent node: ", dependentNode, inDegrees[dependentNode])
-                finalList.append(node)
-                print("Final List: ", finalList)
+                tps.append(str(node))
+                print("Final List: ", tps)
                 startList.remove(node)
                 print("StartList: ", startList)
 
-    if not check_TPS(startGraph, finalList):
-        print("Not valid topological sort. Exiting")
-        sys.exit()
 
-    print(type(finalList[0]))
-    write_tps_to_file(finalList, "output_DAG_10_test.txt")
+    # if (not check_TPS(startGraph, tps)):
+    #     print("Not valid topological sort. Exiting")
+    #     sys.exit()
+
+    write_tps_to_file(tps, filename)
 
     """ <filename> is the name of the input file containing graph information:
     you need to read it in and perform the topological sort, saving the results
     in tps, then use write_tps_to_file() to output it to a file called output_<filename>"""
 
-    write_tps_to_file(tps, filename)
+   # write_tps_to_file(tps, filename)
 
 
 if __name__ == '__main__':
