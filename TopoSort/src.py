@@ -1,6 +1,5 @@
 import graph
 
-
 def read_topo_sort_from_file(filename):
     """This reads the first line of the file. In a topological sort solution file,
     the first line holds the nodes in topological sort order on the first line,
@@ -41,22 +40,36 @@ def write_tps_to_file(tps, filename):
         for node in tps:
             file.write(node + ' ')
 
+def visit(node, startDict, startGraph, stringTps):
+    if startDict[node] == 'B': return #if it's done
+    if startDict[node] == 'G': #if there's a backwards edge
+        print("Not valid topological sort. DAG exists")
+        sys.exit()
+
+    startDict[node] = 'G'
+    #visit all of its outDegrees
+    for dependentNode in startGraph[node]:
+        visit(dependentNode, startDict, startGraph, stringTps)
+    startDict[node]= 'B'
+    stringTps.append(str(node))
 
 def compute_tps(filename):
-    """ Write your implementation to create a topological sort here. 
-    Store your answer in tps"""
-    #dictionary where key = node, val = incoming edges
-    inDegrees = graph.compute_in_degrees()
+    startGraph = graph.read_graph(filename)  #tracks keys and outDegrees
+    startDict = {}
+    # declaring them all as white to start
+    for i in startGraph.keys():
+        startDict[i] = 'W'
 
+    stringTps = [] #backwards topological sort
+    #while there are unvisited nodes
+    while 'W' in startDict.values():
+        for node in startDict:
+            if (startDict[node] == 'W'):
+                visit(node, startDict, startGraph, stringTps)
 
-
-    """ <filename> is the name of the input file containing graph information:
-    you need to read it in and perform the topological sort, saving the results
-    in tps, then use write_tps_to_file() to output it to a file called output_<filename>"""
-
-    tps = []
-    write_tps_to_file(tps, filename)
-
+    #reverse sort because to add in at the beginning would increase complexity
+    stringTps.reverse()
+    write_tps_to_file(stringTps, filename)
 
 if __name__ == '__main__':
     """ Write code here to run compute_tps for your testing purposes"""
