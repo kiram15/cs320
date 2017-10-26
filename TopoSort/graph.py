@@ -109,4 +109,4 @@ def gen_and_write_DAG(num_nodes, filename):
 
 
 if __name__ == '__main__':
-    gen_and_write_DAG(15, "test")
+    gen_and_write_DAG(2500, "test")
