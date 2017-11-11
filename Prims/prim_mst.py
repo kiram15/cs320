@@ -1,12 +1,14 @@
 from undirected_graph import Graph
 import undirected_graph_files_equal
 import heapq
+import time
+import undirected_graph
 
 
 def write_tree_edges_to_file(edges, filename):
     # TODO write out the edges, one per line. The same format as produced by generate_mst_input
     with open(filename, mode='w') as f:
-        print ("H: ", edges)
+        #print ("H: ", edges)
         for v1, v2, w in edges:
             f.write("{} {} {}\n".format(v1, v2, w))
 
@@ -28,14 +30,12 @@ def compute_mst(filename):
     currNode = totalNodes[0] #set start node
     tree = set()
     q = []
-    visited = [currNode]
-    #possibleEdges = []
+    visited = set()
+    visited.add(currNode)
     unique = False
 
-    print(list((g.edges.get(currNode)).keys()))
-
     while (len(visited) < len(totalNodes)): #while there are still more to be visited
-        for node in list((g.edges.get(currNode)).keys()):
+        for node in g.neighbors(currNode):
             lineWeight = (g.attributes_of(currNode, node).get('weight'))
             tup1 = (lineWeight, currNode, node)
             heapq.heappush(q, tup1)
@@ -44,7 +44,7 @@ def compute_mst(filename):
             tup2 = (startNode, endNode, weight)
             tree.add(tup2)
             currNode = endNode
-            visited.append(currNode)
+            visited.add(currNode)
         else:
             while(unique == False):
                 weight, startNode, endNode = heapq.heappop(q)
@@ -52,24 +52,19 @@ def compute_mst(filename):
                     tup2 = (startNode, endNode, weight)
                     tree.add(tup2)
                     currNode = endNode
-                    visited.append(currNode)
+                    visited.add(currNode)
                     unique == True
                     break
-        print("FinalTree: ", tree)
-
-
-    visited = []
 
     tree_edges = tree
 
-
-
-
-    # TODO compute the edges of a minimum spanning tree
     write_tree_edges_to_file(tree_edges, filename + '.mst')
 
 if __name__ == "__main__":
     import sys
     filename = sys.argv[1]
+    start = time.time()
     compute_mst(filename)
-    print(undirected_graph_files_equal.graph_files_equal(sys.argv[2], sys.argv[3]))
+    end = time.time()
+    #print(end - start)
+    #print(undirected_graph_files_equal.graph_files_equal(sys.argv[2], sys.argv[3]))
