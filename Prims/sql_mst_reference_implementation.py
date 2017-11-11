@@ -54,3 +54,9 @@ def compute_mst(filename):
     conn.commit()
     write_tree_edges(conn, filename + '.sql.mst')
     conn.close()
+
+if __name__ == "__main__":
+    import sys
+    filename = sys.argv[1]
+    compute_mst(filename)
+
