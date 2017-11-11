@@ -41,10 +41,17 @@ def generate_weighted_undirected_graph_edges(vertex_count, seed=0):
     weights = list(range(edge_count))
     r.shuffle(weights)
 
-    return [(name(v1), name(v2), w) for (v1, v2), w in zip(sorted(E), weights)]
+    write_graph_edges_to_file("bigTestFile", [(name(v1), name(v2), w) for (v1, v2), w in zip(sorted(E), weights)])
+
+    #return [(name(v1), name(v2), w) for (v1, v2), w in zip(sorted(E), weights)]
 
 
 def write_graph_edges_to_file(filename, edges):
     with open(filename, mode='w') as f:
         for v1, v2, w in edges:
             f.write("{} {} {}\n".format(v1, v2, w))
+
+
+if __name__ == "__main__":
+    generate_weighted_undirected_graph_edges(40, seed=1)
+
